@@ -5,7 +5,7 @@
 
  Description: This method is used to detach a security group to an Amazon instance
 -------------------------------------------------------------------------------
-   Copyright 2016 Kevin Morey <kevin@redhat.com>
+   Copyright 2018 Kevin Morey <kevin@redhat.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ begin
   @provider = @vm.ext_management_system
 
   sg_input = $evm.root['dialog_securitygroup_id'] || $evm.root['dialog_securitygroup_emsref'] ||
-    $evm.object['securitygroup_emsref']
+    $evm.root['securitygroup_emsref'] || $evm.object['securitygroup_emsref']
 
   # populate this or pull from instance with $evm.object
   security_group = @provider.security_groups.detect {|sg| sg.ems_ref == sg_input } ||
@@ -53,9 +53,9 @@ begin
   log(:info, "EC2 instance #{@vm.ems_ref} currently has security groups #{existing_sg} assigned")
 
   new_securitygroup_array = []
-  existing_sg.each do |sg| 
+  existing_sg.each do |sg|
     next if sg[:group_id] == security_group.ems_ref
-    new_securitygroup_array << sg[:group_id] 
+    new_securitygroup_array << sg[:group_id]
   end
   log(:info, "new_securitygroup_array: #{new_securitygroup_array.uniq}")
 

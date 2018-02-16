@@ -5,7 +5,7 @@
 
  Description: This method is used to attach a security group to an Amazon instance
 -------------------------------------------------------------------------------
-   Copyright 2016 Kevin Morey <kevin@redhat.com>
+   Copyright 2018 Kevin Morey <kevin@redhat.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -40,8 +40,8 @@ begin
   @provider = @vm.ext_management_system
 
   sg_input = $evm.root['dialog_securitygroup_id'] || $evm.root['dialog_securitygroup_emsref'] ||
-    $evm.object['securitygroup_emsref']
-  
+    $evm.root['securitygroup_emsref'] || $evm.object['securitygroup_emsref']
+
   # populate this or pull from instance with $evm.object
   security_group = @provider.security_groups.detect {|sg| sg.ems_ref == sg_input } ||
     @provider.security_groups.detect {|sg| sg.id == sg_input }
