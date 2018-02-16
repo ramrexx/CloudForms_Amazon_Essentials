@@ -1,7 +1,7 @@
 ////
  README.adoc
 -------------------------------------------------------------------------------
-   Copyright 2017 Kevin Morey <kevin@redhat.com>
+   Copyright 2018 Kevin Morey <kevin@redhat.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,7 +19,4 @@
 
 = Welcome to the CloudForms Amazon Essentials project
 
-A collection of tools for Red Hat CloudForms managing Amazon AWS environments.
-
-Current supported version: *cf4.6*
-
+A collection of essential tools for ManageIQ/Red Hat CloudForms managing Amazon AWS environments
