@@ -1,12 +1,12 @@
 #cloud-config
 #
-# rhel7_wordpress.yaml
+# ec2_rhel7_wordpress.yml
 #
 #  Author: Kevin Morey <kevin@redhat.com>
 #
 #  Description: CloudForms - cloud-init script for a RHEL WordPress server installation on EC2.
-#  
-#  Notes: The evm hash below is the same as $evm.root['miq_provision'].options giving you access to all of the 
+#
+#  Notes: The evm hash below is the same as $evm.root['miq_provision'].options giving you access to all of the
 #     provisioning options
 #
 #  Troubleshooting: /var/log/boot.log & /var/log/cloud-init-output.log & /var/lib/cloud/instance/user-data.txt
@@ -32,7 +32,7 @@
   instance_name         = evm[:vm_target_name]
   key_pair              = evm[:keypair] || ws_values[:keypair]
   default_key_pair      = ""
-  
+
   root_password         = evm[:root_password]     || ws_values[:root_password]      || 'Redhat1!'
   database_name         = evm[:database_name]     || ws_values[:database_name]      || 'wordpressdb'
   database_user         = evm[:database_user]     || ws_values[:database_user]      || 'wordpressuser'
@@ -60,7 +60,7 @@ runcmd:
 
   ## turn off firewall
   - echo CloudForms Turning off firewall
-  - chkconfig iptables off  
+  - chkconfig iptables off
   - service iptables stop
 
   ## install Mariadb
@@ -70,7 +70,7 @@ runcmd:
   - echo CloudForms Starting Mariadb
   - systemctl start mariadb
   - systemctl enable mariadb
-  
+
   ## setting up MySQL root password
   - echo CloudForms Configuring mysql
   - mysqladmin -u root password <%=root_password%>
