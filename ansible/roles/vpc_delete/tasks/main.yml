@@ -1,0 +1,143 @@
+---
+- name: Get Service Information
+  uri: 
+    url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
+    method: GET
+    body_format: json
+    validate_certs: False
+    headers:
+      X-Auth-Token: "{{ manageiq.api_token }}"
+      Content-Type: "application/json"
+    status_code: 200
+  register: service_output
+  when: manageiq is defined
+
+- name: Print service_output
+  debug: 
+    var: service_output
+  when: verbose and manageiq is defined
+
+- name: Set vpc_name From Service Description
+  set_fact: 
+    vpc_name: "{{ service_output.json.description }}"
+
+- name: Print vpc_name
+  debug: 
+    var: vpc_name
+  when: verbose and manageiq is defined
+
+- name: Get VPC Facts
+  ec2_vpc_net_facts:
+    region: "{{ region }}"
+    filters:
+      "tag:Name": "{{ vpc_name }}"
+  register: vpc_facts
+
+- name: Print vpc_facts
+  debug: 
+    var: vpc_facts
+  when: verbose
+
+- name: Get Security Group Facts
+  ec2_group_facts:
+    region: "{{ region }}"
+    filters:
+      vpc-id: "{{ vpc_facts.vpcs[0].id }}"
+  register: sg_facts
+
+- name: Print sg_facts
+  debug: 
+    var: sg_facts
+  when: verbose
+
+- name: Delete Security Group
+  ec2_group:
+    region: "{{ region }}"
+    name: "{{ item.group_name }}"
+    state: absent
+  when: item.group_name != 'default'
+  register: delete_sg
+  with_items: "{{ sg_facts.security_groups }}"
+
+- name: Print delete_sg
+  debug: 
+    var: delete_sg
+  when: verbose
+
+- name: Get Subnet Facts
+  ec2_vpc_subnet_facts:
+    region: "{{ region }}"
+    filters:
+      vpc-id: "{{ vpc_facts.vpcs[0].id }}"
+  register: subnet_facts
+
+- name: Print subnet_facts
+  debug: 
+    var: subnet_facts
+  when: verbose
+
+- name: Delete Subnet
+  ec2_vpc_subnet:
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+    cidr: "{{ item.cidr_block }}"
+    state: absent
+  register: delete_subnet
+  with_items: "{{ subnet_facts.subnets }}"
+  
+- name: Print delete_subnet
+  debug: 
+    var: delete_subnet
+  when: verbose
+
+- name: Delete Route Table
+  ec2_vpc_route_table:
+    state: absent
+    vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+    region: "{{ region }}"
+    tags:
+      Name: "My Route Table"
+  register: delete_rtb
+
+- name: Print delete_rtb
+  debug: 
+    var: delete_rtb
+  when: verbose
+
+- name: Get Internet Gateway Facts
+  ec2_vpc_igw_facts:
+    region: "{{ region }}"
+    filters:
+      attachment.vpc-id: "{{ vpc_facts.vpcs[0].id }}"
+  register: igw_facts
+
+- name: Print igw_facts
+  debug: 
+    var: igw_facts
+  when: verbose
+
+- name: Delete Internet Gateway
+  ec2_vpc_igw:
+    region: "{{ region }}"
+    vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+    state: absent
+  register: delete_igw
+  with_items: "{{ igw_facts.internet_gateways }}"
+
+- name: Print delete_igw
+  debug: 
+    var: delete_igw
+  when: verbose
+
+- name: Delete VPC
+  ec2_vpc_net:
+    region: "{{ region }}"
+    name: "{{ vpc_name }}"
+    cidr_block: "{{ vpc_facts.vpcs[0].cidr_block }}"
+    state: absent
+  register: delete_vpc
+
+- name: Print delete_vpc
+  debug: 
+    var: delete_vpc
+  when: verbose
