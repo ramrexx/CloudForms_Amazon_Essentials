@@ -17,6 +17,10 @@
 -------------------------------------------------------------------------------
 ////
 
-= Welcome to the CloudForms Amazon Essentials project
+= Welcome to CloudForms_Amazon_Essentials
 
-A collection of essential tools for ManageIQ/Red Hat CloudForms managing Amazon AWS environments
+A collection of essential tools for managing Amazon AWS environments using ManageIQ/Red Hat CloudForms
+
+= Contribute
+
+Submit a pull request!
