@@ -8,7 +8,7 @@
       when: manageiq is defined
 
     - role: ec2_vmname
-      when: generate_names
+      when: generate_names is defined and generate_names
 
     - role: ec2_provision
 
