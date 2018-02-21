@@ -1,0 +1,45 @@
+////
+ provisioning.adoc
+-------------------------------------------------------------------------------
+   Copyright 2018 Kevin Morey <kevin@redhat.com>
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-------------------------------------------------------------------------------
+////
+
+= EC2 Basic Provisioning
+Provision Amazon EC2 instances via CloudForms with Ansible Automation.
+
+IMPORTANT: These instructions assume you have enabled the "*Embedded Ansible*" role in CloudForms.
+
+* Fork this repository
+* Update the credentials in ansible/roles/ec2_postprovision/defaults/main.yml
+[source,yaml]
+----
+manageiq_user: admin
+manageiq_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39613462343331363430333461633531316665333332333530393239306662616566363539316565
+          ...
+----
+
+* Log into CloudForms
+** Navigate to Automation / Ansible / Repositories
+*** Add your forked repository
+** Navigate to Automation / Ansible / Credentials
+*** Create a Amazon Credential
+*** Create a Machine Credential (be sure to include your vault password else your *manageiq_password* will not be decrypted)
+** Import the sample EC2 provisioning service dialog
+*** Make any edits to the service dialogs as needed
+** Create ansible-playbook service catalog item
+** Deploy your VMs!

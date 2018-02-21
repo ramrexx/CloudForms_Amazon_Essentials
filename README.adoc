@@ -20,3 +20,9 @@
 = Welcome to CloudForms_Amazon_Essentials
 
 A collection of essential tools for managing AWS environments using ManageIQ/Red Hat CloudForms
+
+IMPORTANT: This repo is subject to frequent changes without warning.
+To avoid issues please **FORK** the repository!
+
+== Documentation
+* link:docs/provisioning.adoc[Provisioning]
