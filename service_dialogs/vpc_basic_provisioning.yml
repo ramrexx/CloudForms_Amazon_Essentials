@@ -1,0 +1,411 @@
+---
+- description: ''
+  buttons: submit,cancel
+  label: vpc_basic_provisioning
+  dialog_tabs:
+  - description:
+    display: edit
+    label: VPC
+    display_method:
+    display_method_options:
+    position: 0
+    dialog_groups:
+    - description:
+      display: edit
+      label: Information
+      display_method:
+      display_method_options:
+      position: 0
+      dialog_fields:
+      - name: param_aws_az
+        description:
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: a
+        values:
+        - - a
+          - a
+        - - b
+          - b
+        values_method:
+        values_method_options: {}
+        options:
+          :sort_by: :description
+          :sort_order: :ascending
+        label: Availability Zone
+        position: 0
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldRadioButton
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: param_aws_vpc_name
+        description:
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: ''
+        values:
+        values_method:
+        values_method_options: {}
+        options:
+          :protected: false
+        label: VPC Name
+        position: 1
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: param_aws_vpc_cidr_block
+        description:
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: 10.0.0.0/16
+        values:
+        values_method:
+        values_method_options: {}
+        options:
+          :protected: false
+        label: VPC CIDR Block
+        position: 2
+        validator_type: regex
+        validator_rule: "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: param_aws_public_subnet_cidr
+        description:
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: 10.0.0.0/24
+        values:
+        values_method:
+        values_method_options: {}
+        options:
+          :protected: false
+        label: Subnet CIDR
+        position: 3
+        validator_type: regex
+        validator_rule: "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: param_aws_cidr_ip
+        description:
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: 0.0.0.0/0
+        values:
+        values_method:
+        values_method_options: {}
+        options:
+          :protected: false
+        label: Security Group CIDR
+        position: 4
+        validator_type: regex
+        validator_rule: "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$"
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+  - description:
+    display: edit
+    label: Defaults
+    display_method:
+    display_method_options:
+    position: 1
+    dialog_groups:
+    - description: Set Service Defaults here I.e. retirement, warning, etc.
+      display: edit
+      label: Service
+      display_method:
+      display_method_options:
+      position: 0
+      dialog_fields:
+      - name: service_name
+        description: Enter Service Name
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: false
+        required_method:
+        required_method_options: {}
+        default_value: ''
+        values:
+        values_method:
+        values_method_options: {}
+        options:
+          :protected: false
+        label: Service Name
+        position: 0
+        validator_type: regex
+        validator_rule: "^[a-zA-Z0-9-]{0,25}$"
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: service_description
+        description:
+        data_type:
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: false
+        required_method:
+        required_method_options: {}
+        default_value: ''
+        values:
+        values_method:
+        values_method_options: {}
+        options:
+          :protected: false
+        label: Service Description
+        position: 1
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: true
+        type: DialogFieldTextAreaBox
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: service_retires_on
+        description: Number of days to retire service
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: '3'
+        values:
+        - - '30'
+          - 1 month
+        - - '7'
+          - 1 week
+        - - '14'
+          - 2 weeks
+        - - '3'
+          - 3 days
+        - - '0'
+          - Infinite
+        values_method:
+        values_method_options: {}
+        options:
+          :sort_by: :description
+          :sort_order: :ascending
+          :force_multi_value: false
+        label: Service Retirement
+        position: 2
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: false
+        type: DialogFieldDropDownList
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
+      - name: service_retirement_warn
+        description: Number of days to warn the user before service retirement
+        data_type: string
+        notes:
+        notes_display:
+        display: edit
+        display_method:
+        display_method_options: {}
+        required: true
+        required_method:
+        required_method_options: {}
+        default_value: '1'
+        values:
+        - - '1'
+          - 1 day
+        - - '7'
+          - 1 week
+        - - '14'
+          - 2 weeks
+        - - '3'
+          - 3 days
+        values_method:
+        values_method_options: {}
+        options:
+          :sort_by: :description
+          :sort_order: :ascending
+          :force_multi_value: false
+        label: Service Retirement Warning
+        position: 3
+        validator_type:
+        validator_rule:
+        reconfigurable:
+        dynamic: false
+        show_refresh_button:
+        load_values_on_init:
+        read_only: false
+        auto_refresh:
+        trigger_auto_refresh:
+        visible: false
+        type: DialogFieldDropDownList
+        resource_action:
+          action:
+          resource_type: DialogField
+          ae_namespace:
+          ae_class:
+          ae_instance:
+          ae_message:
+          ae_attributes: {}
+        dialog_field_responders: []
