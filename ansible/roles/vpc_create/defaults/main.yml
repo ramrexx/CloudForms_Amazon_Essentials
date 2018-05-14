@@ -1,7 +1,7 @@
 ---
 aws_access_key:
 aws_secret_key:
-region: "{{ aws_region | default('us-west-2') }}"
+aws_region: us-west-2
 
 # VPC Information
 vpc_name: "{{ aws_vpc_name | default('my_vpc') }}"
