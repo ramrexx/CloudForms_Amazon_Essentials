@@ -1,6 +1,6 @@
 ---
 - name: Get Service Information
-  uri: 
+  uri:
     url: "{{ manageiq.api_url }}/api/{{ manageiq.service }}"
     method: GET
     body_format: json
@@ -13,7 +13,7 @@
   when: manageiq is defined
 
 - name: Print service_output
-  debug: 
+  debug:
     var: service_output
   when: verbose and manageiq is defined
 
@@ -22,19 +22,20 @@
     vpc_name: "{{ service_output.json.description }}"
 
 - name: Print vpc_name
-  debug: 
+  debug:
     var: vpc_name
   when: verbose and manageiq is defined
 
 - name: Get VPC Facts
   ec2_vpc_net_facts:
     region: "{{ region }}"
-    filters:
-      "tag:Name": "{{ vpc_name }}"
+    vpc_ids: "{{ vpc_name }}"
+    # filters:
+    #   "tag:Name": "{{ vpc_name }}"
   register: vpc_facts
 
 - name: Print vpc_facts
-  debug: 
+  debug:
     var: vpc_facts
   when: verbose
 
@@ -46,7 +47,7 @@
   register: sg_facts
 
 - name: Print sg_facts
-  debug: 
+  debug:
     var: sg_facts
   when: verbose
 
@@ -60,7 +61,7 @@
   with_items: "{{ sg_facts.security_groups }}"
 
 - name: Print delete_sg
-  debug: 
+  debug:
     var: delete_sg
   when: verbose
 
@@ -72,7 +73,7 @@
   register: subnet_facts
 
 - name: Print subnet_facts
-  debug: 
+  debug:
     var: subnet_facts
   when: verbose
 
@@ -84,9 +85,9 @@
     state: absent
   register: delete_subnet
   with_items: "{{ subnet_facts.subnets }}"
-  
+
 - name: Print delete_subnet
-  debug: 
+  debug:
     var: delete_subnet
   when: verbose
 
@@ -100,7 +101,7 @@
   register: delete_rtb
 
 - name: Print delete_rtb
-  debug: 
+  debug:
     var: delete_rtb
   when: verbose
 
@@ -112,7 +113,7 @@
   register: igw_facts
 
 - name: Print igw_facts
-  debug: 
+  debug:
     var: igw_facts
   when: verbose
 
@@ -125,7 +126,7 @@
   with_items: "{{ igw_facts.internet_gateways }}"
 
 - name: Print delete_igw
-  debug: 
+  debug:
     var: delete_igw
   when: verbose
 
@@ -138,6 +139,6 @@
   register: delete_vpc
 
 - name: Print delete_vpc
-  debug: 
+  debug:
     var: delete_vpc
   when: verbose
