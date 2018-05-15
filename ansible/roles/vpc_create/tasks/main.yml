@@ -106,7 +106,7 @@
     body:
       action: edit
       resource:
-        description: "{{ vpc_id }}"
+        description: "{{ vpc_name }}"
     body_format: json
     validate_certs: False
     headers:

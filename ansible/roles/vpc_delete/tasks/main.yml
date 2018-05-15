@@ -18,7 +18,7 @@
   when: verbose and manageiq is defined
 
 - name: Set vpc_name From Service Description
-  set_fact: 
+  set_fact:
     vpc_name: "{{ service_output.json.description }}"
 
 - name: Print vpc_name
@@ -29,9 +29,8 @@
 - name: Get VPC Facts
   ec2_vpc_net_facts:
     region: "{{ region }}"
-    vpc_ids: "{{ vpc_name }}"
-    # filters:
-    #   "tag:Name": "{{ vpc_name }}"
+    filters:
+      "tag:Name": "{{ vpc_name }}"
   register: vpc_facts
 
 - name: Print vpc_facts
